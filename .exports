@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Make vim the default editor.
+export EDITOR="vim"
+
+# Don't clear the screen after quitting a man page.
+export MANPAGER="less -X"
+
+# Hilight section titles in man pages.
+export LESS_TERMCAP_MD="${RED}"
+
+# Larger bash history (allow 32^3 entries; default is 500)
+export HISTSIZE=32768
+export HISTFILESIZE=${HISTSIZE}
+export HISTCONTROL=ignoredups
+
+# Make some commands not show up in history
+export HISTIGNORE="ls:pwd:exit:date:* --help"
