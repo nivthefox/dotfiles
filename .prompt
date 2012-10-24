@@ -1,0 +1,79 @@
+#!/bin/bash
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color > /dev/null 2>&1; then
+    export TERM=gnome-256color
+elif infocmp xterm-256color > /dev/null 2>&1; then
+    export TERM=xterm-256color
+fi
+
+if tput setaf 1 &> /dev/null; then
+    tput sgr0
+    RESET=$(tput sgr0)
+    if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
+        BLACK="$(tput setaf 233)"
+        RED="$(tput setaf 160)"
+        GREEN="$(tput setaf 64)"
+        YELLOW="$(tput setaf 94)"
+        BLUE="$(tput setaf 26)"
+        MAGENTA="$(tput setaf 96)"
+        CYAN="$(tput setaf 26)"
+        WHITE="$(tput setaf 248)"
+        HI_BLACK="$(tput setaf 240)"
+        HI_RED="$(tput setaf 197)"
+        HI_GREEN="$(tput setaf 71)"
+        HI_YELLOW="$(tput setaf 228)"
+        HI_BLUE="$(tput setaf 195)"
+        HI_MAGENTA="$(tput setaf 219)"
+        HI_CYAN="$(tput setaf 39)"
+        HI_WHITE="$(tput setaf 255)"
+    else
+        bold=$(tput bold)
+        BLACK="$(tput setaf 0)"
+        RED="$(tput setaf 1)"
+        GREEN="$(tput setaf 2)"
+        YELLOW="$(tput setaf 3)"
+        BLUE="$(tput setaf 4)"
+        MAGENTA="$(tput setaf 5)"
+        CYAN="$(tput setaf 6)"
+        WHITE="$(tput setaf 7)"
+        HI_BLACK="${bold}${BLACK}"
+        HI_RED="${bold}${RED}"
+        HI_GREEN="${bold}${GREEN}"
+        HI_YELLOW="${bold}${YELLOW}"
+        HI_BLUE="${bold}${BLUE}"
+        HI_MAGENTA="${bold}${MAGENTA}"
+        HI_CYAN="${bold}${CYAN}"
+        HI_WHITE="${bold}${WHITE}"
+        unset bold
+    fi
+else
+    RESET="\e[m"
+    BLACK="\e[30m"
+    RED="\e[31m"
+    GREEN="\e[32m"
+    YELLOW="\e[33m"
+    BLUE="\e[34m"
+    MAGENTA="\e[35m"
+    CYAN="\e[36m"
+    WHITE="\e[37m"
+    HI_BLACK="\e[30;1m"
+    HI_RED="\e[31;1m"
+    HI_GREEN="\e[32;1m"
+    HI_YELLOW="\e[33;1m"
+    HI_BLUE="\e[34;1m"
+    HI_MAGENTA="\e[35;1m"
+    HI_CYAN="\e[36;1m"
+    HI_WHITE="\e[37;1m"
+fi
+
+function isBranchDirty() {
+    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+}
+
+function getGitBranch() {
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/${HI_BLACK} \(${YELLOW}git \1${HI_YELLOW}$(isBranchDirty)${HI_BLACK}\)${RESET}/"
+}
+
+line1="${HI_BLACK}[${HI_CYAN}\u${HI_BLACK}@${HI_CYAN}\H${HI_BLACK}:${GREEN}\w${HI_BLACK}::${RED}\j${HI_BLACK}]${RESET}"
+line2="${HI_BLACK}[${HI_BLACK}\d \t\$(getGitBranch)${HI_BLACK}] ${HI_WHITE}\$ ${RESET}"
+
+export PS1="${line1}\n${line2}"
