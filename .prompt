@@ -6,7 +6,6 @@ elif infocmp xterm-256color > /dev/null 2>&1; then
 fi
 
 if tput setaf 1 &> /dev/null; then
-    tput sgr0
     RESET=$(tput sgr0)
     if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
         BLACK="$(tput setaf 233)"
@@ -26,7 +25,7 @@ if tput setaf 1 &> /dev/null; then
         HI_CYAN="$(tput setaf 39)"
         HI_WHITE="$(tput setaf 255)"
     else
-        bold=$(tput bold)
+        bold="$(tput bold)"
         BLACK="$(tput setaf 0)"
         RED="$(tput setaf 1)"
         GREEN="$(tput setaf 2)"
@@ -65,15 +64,33 @@ else
     HI_WHITE="\e[37;1m"
 fi
 
+export RESET
+export BLACK
+export RED
+export GREEN
+export YELLOW
+export BLUE
+export MAGENTA
+export CYAN
+export WHITE
+export HI_BLACK
+export HI_RED
+export HI_GREEN
+export HI_YELLOW
+export HI_BLUE
+export HI_MAGENTA
+export HI_CYAN
+export HI_WHITE
+
 function isBranchDirty() {
     [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
 }
 
 function getGitBranch() {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/${HI_BLACK} \(${YELLOW}git \1${HI_YELLOW}$(isBranchDirty)${HI_BLACK}\)${RESET}/"
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/ \\\[${HI_BLACK}\\\]\(\\\[${YELLOW}\\\]git \1\\\[${HI_YELLOW}\\\]\\\[$(isBranchDirty)\\\]\\\[${HI_BLACK}\\\]\)\\\[${RESET}\\\]/"
 }
 
-line1="${HI_BLACK}[${HI_CYAN}\u${HI_BLACK}@${HI_CYAN}\H${HI_BLACK}:${GREEN}\w${HI_BLACK}::${RED}\j${HI_BLACK}]${RESET}"
-line2="${HI_BLACK}[${HI_BLACK}\d \t\$(getGitBranch)${HI_BLACK}] ${HI_WHITE}\$ ${RESET}"
+l1="\[${HI_BLACK}\][\[${HI_CYAN}\]\u\[${HI_BLACK}\]@\[${HI_CYAN}\]\H\[${HI_BLACK}\]:\[${GREEN}\]\w\[${HI_BLACK}\]::\[${RED}\]\j\[${HI_BLACK}\]]\[${RESET}\]"
+l2="\[${HI_BLACK}\][\d \t\[$(getGitBranch)\]\[${HI_BLACK}\]] \[${HI_WHITE}\]\$ \[${RESET}\]"
 
-export PS1="${line1}\n${line2}"
+export PS1="\[${l1}\]\n\[${l2}\]"
