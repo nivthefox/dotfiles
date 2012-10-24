@@ -21,5 +21,5 @@ alias less="less -R"
 alias grep="grep --color=always"
 
 # If TinyFugue is installed
-[ -e $(which tf) ] && alias tf="tf -n"
+[ -e $(which tf 2> /dev/null) ] && alias tf="tf -n"
 
