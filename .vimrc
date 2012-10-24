@@ -1,3 +1,5 @@
+" Expect dark backgroudns by default
+set background=dark
 " Make vim more useful
 set nocompatible
 " Use the OS clipboard by default (on versions compiled with '+clipboard')
@@ -60,7 +62,7 @@ set title
 " Show the (partial) command as it's being typed
 set showcmd
 " Use relative line numnbers
-if exists("&relativenumber"
+if exists("&relativenumber")
     set relativenumber
     au BufReadPost * set relativenumber
 endif
