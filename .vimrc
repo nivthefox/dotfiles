@@ -1,4 +1,4 @@
-" Expect dark backgroudns by default
+" Expect dark backgrounds by default
 set background=dark
 " Use the OS clipboard by default (on versions compiled with '+clipboard')
 set clipboard=unnamed
@@ -35,6 +35,8 @@ syntax on
 set cursorline
 " Make tabs as wide as 4 spaces
 set tabstop=4
+" Convert all tabs to spaces
+set expandtab
 " Hilight searches
 set hlsearch
 " Ignore case of searches
