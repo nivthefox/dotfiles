@@ -20,6 +20,9 @@ export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 alias less="less -R"
 alias grep="grep --color=always"
 
+# Sudo with your own ssh auth.
+sudo SSH_AUTH_SOCK=$SSH_AUTH_SOCK
+
 # If TinyFugue is installed
 [ -e $(which tf 2> /dev/null) ] && alias tf="tf -n"
 
