@@ -1,6 +1,6 @@
 [alias]
   st = status
-  tip = log --oneline --no-walk --decorate
+  tip = log --oneline --decorate --reverse origin/master..HEAD
   ci = commit
   br = branch
   co = checkout
