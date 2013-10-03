@@ -1,10 +1,10 @@
 [alias]
   st = status
+  tip = log --oneline --no-walk --decorate
   ci = commit
   br = branch
   co = checkout
   df = diff
-  lg = log -p
 
 [core]
     attribsfile = ~/.gitattributes
