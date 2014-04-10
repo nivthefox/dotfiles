@@ -1,4 +1,4 @@
-# Kevin's dotfiles
+# Jeremy's dotfiles
 
 ## Installation
 
