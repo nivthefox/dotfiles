@@ -10,7 +10,7 @@ fi
 
 SSH_ENV="$HOME/.ssh/environment"
 
-function ssh_ssh_start_agent {
+function ssh_start_agent {
     echo "Initializing new SSH agent..."
     ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
     chmod 600 "${SSH_ENV}"
