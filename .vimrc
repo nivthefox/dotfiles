@@ -34,6 +34,7 @@ syntax on
 " Hilight current line
 set cursorline
 " Make tabs as wide as 4 spaces
+set shiftwidth=4
 set tabstop=4
 " Convert all tabs to spaces
 set expandtab
