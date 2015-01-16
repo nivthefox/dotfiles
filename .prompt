@@ -84,7 +84,9 @@ export HIWHITE
 
 function getGitHealth() {
     if [[ -n $(git branch 2> /dev/null) ]]; then
-        [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+        if [[ "$(git status --short 2> /dev/null | wc -l)" -ne 0 ]]; then
+            echo "*"
+        fi
     fi
 }
 
