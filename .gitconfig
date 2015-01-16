@@ -1,10 +1,12 @@
 [alias]
-  st = status
-  tip = log --oneline --decorate --reverse origin/master..HEAD
-  ci = commit
-  br = branch
-  co = checkout
-  df = diff
+  st = status --short
+  lg = log --oneline --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+  graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  tips = "!f(){ git log --oneline --decorate --reverse ${1-origin/master}..HEAD; };f"
+  spit = "!f(){ git log --oneline --decorate --reverse HEAD..${1-origin/master}; };f"
+  tg = "!f(){ git tag | sort -V; };f"
+  pum = pull --rebase upstream master
+  pom = pull --rebase origin master
 
 [core]
     attribsfile = ~/.gitattributes
@@ -37,3 +39,4 @@
 
 [user]
     name = Kevin Kragenbrink
+	email = kevin@gaikai.com
