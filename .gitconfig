@@ -4,7 +4,7 @@
   graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   tips = "!f(){ git log --oneline --decorate --reverse ${1-origin/master}..HEAD; };f"
   spit = "!f(){ git log --oneline --decorate --reverse HEAD..${1-origin/master}; };f"
-  tg = "!f(){ git tag | sort -V; };f"
+  tg = "!f(){ git tag | sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n; };f"
   pum = pull --rebase upstream master
   pom = pull --rebase origin master
 
