@@ -26,3 +26,18 @@ if [ -f "${SSH_ENV}" ]; then
 else
     ssh_start_agent;
 fi
+
+# If sort -V does not exist, simulate it
+if [ -e $(ls | sort -V 1> /dev/null) ]; then
+
+    function sort() {
+        case $* in
+            -V* )
+                shift 1;
+                command sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n "$@";;
+            * )
+                command sort "$@";;
+        esac
+    }
+
+fi
