@@ -1,5 +1,9 @@
 #!/bin/bash
 # Detect which `ls` flavor is in use
+
+alias fucking="sudo"
+alias fuck="sudo"
+
 if ls --color > /dev/null 2>&1; then
     colorflag="--color"
 else
