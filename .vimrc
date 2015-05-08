@@ -1,3 +1,5 @@
+" Automatically indent lines.
+set autoindent
 " Expect dark backgrounds by default
 set background=dark
 " Use the OS clipboard by default (on versions compiled with '+clipboard')
