@@ -16,6 +16,9 @@
 ; This will make ESC-W foreground the world with the most recent activity.
 /load -q worldqueue.tf
 
+; This will allow you to connect to IRC worlds.
+/load -q irc.tf
+
 ; ########################################
 ; ## CONFIGURATION
 ; ########################################
@@ -69,15 +72,6 @@
 ; ########################################
 ; ## TRIGGERS
 ; ########################################
-/set regexp_page=^(\
-[-\w ]+ pages: .*|\
-\(To: [-\w ]+ and [-\w ]+\) [-\w ]+ pages: .*|\
-\(To: ([-\w ]+, ){2,}and [-\w ]+\) [-\w ]+ pages: .*|\
-To:? \(([-\w ]+, )+[-\w ]+\), [-\w ]+ pages: .*|\
-From afar, [-\w ]+ .*|\
-\(To: [-\w ]+ and [-\w ]+\) From afar, [-\w ]+ .*|\
-\(To: ([-\w ]+, ){2,}and [-\w ]+\) From afar, [-\w ]+ .*|\
-From afar, to \(([-\w ]+, )+[-\w ]+\): [-\w ]+ .*)$
 
 ;/set regexp_whisper=^(\
 ;[-\w ]+ senses \"[-\w ]+ test\"|\
@@ -89,18 +83,9 @@ From afar, to \(([-\w ]+, )+[-\w ]+\): [-\w ]+ .*)$
 ;([-\w ]+, )+[-\w ]+ sense \".*\"|\
 ;[-\w ]+ whispers \".*\")$
 
-/set regexp_chat=^(\
-\[[-\w ]{1,24}\] .*|\
-\<[-\w ]{1,24}\> .*|\
-Faction: \[[-\w ]{1,24}\] .*)$
 
-/load ~/tflib/name_hilights.tf
-/def name_hilite = /eval -s0 /def -F -p1 -P0u -mregexp -t"%{regexp_name}" name_hilite
-/name_hilite
-/def -b'^x^n'=/limit -mregexp %{regexp_name}
+/load ~/tflib/hilights.tf
 
-/def page_hilite = /eval -s0 /def -F -p5 -ahCcyan -mregexp -t"%{regexp_page}" page_hilite
-/page_hilite
 ;/def whisper_hilite = /eval -s0 /def -p6 -F -PhCgreen -mregexp -t"%{regexp_whisper}" whisper_hilite
 ;/whisper_hilite
 
@@ -126,18 +111,6 @@ Faction: \[[-\w ]{1,24}\] .*)$
 ; /unidle sends a ping every 10 minutes to keep me alive.
 ; USAGE: /unidle <world>
 /def unidle=/send THINK%; /repeat -w%1 -600 1 /unidle %1
-/def natunidle=/send page Charlotte=[u(F.HEARTSGALORE)]%; /repeat -wcross.nat -24:00 1 /natunidle
-
-; /willpower automatically willpower/rests every 18 hours.
-; USAGE: /willpower <world>
-/def willpower=/send -w%1 +willpower/rest%; /repeat -w%1 -18:00 1 /willpower %1
-
-; /upkeep Sets up an upkeep cycle for the character.
-; USAGE: /upkeep <world> <command> <amount> <frequency>
-;/def upkeep=/send -w%1 +%2/spend %3=Upkeep%; /repeat -w%1 -$[18*{4}]:00 1 /upkeep %1 %2 %3 %4
-
-; CTRL-X-X unlimits everything
-/def -b'^x^x'=/unlimit
 
 ; Gentoo keymaps are a little different from windows. Include
 ; the following for compatibility with ALT-LEFT, ALT-RIGHT,
@@ -151,18 +124,6 @@ Faction: \[[-\w ]{1,24}\] .*)$
 /def -b'^[O5D' = /dokey WLEFT
 /def -b'^[O5d' = /dokey WLEFT
 
-; CTRL-X-P will limit my input to only pages
-/def -b'^x^p'=/limit -mregexp %{regexp_page}
-
-; CTRL-X-T limits my input to only channel chatter
-/def -b'^x^t'=/limit -mregexp %{regexp_chat}
-
-; CTRL-X-R limits my input to non-page non-channel content.
-/def -b'^x^r'=/limit -v -mregexp %{regexp_nopagechat}
-
-; CTRL-X-X unlimits everything
-/def -b'^x^x'=/unlimit
-
 ; ########################################
 ; ## GAGS
 ; ########################################
@@ -175,4 +136,5 @@ Faction: \[[-\w ]{1,24}\] .*)$
 /def -p0 -ag -mglob -t'\[GAME\] Yarr! We be savin\' now!!' 
 /def -p0 -ag -mglob -t'\[GAME\] The savin\' be complete! Back to yer pillagin\', me hearties!'
 
+/def emit=/send @emit %{*}
 
