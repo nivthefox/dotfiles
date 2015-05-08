@@ -16,3 +16,6 @@ export HISTCONTROL=ignoredups
 
 # Make some commands not show up in history
 export HISTIGNORE="ls:pwd:exit:date:* --help"
+
+# Log Directory
+export LOGS_DIR="${HOME}/log"
