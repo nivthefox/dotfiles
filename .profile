@@ -6,9 +6,6 @@
 # for ssh logins, install and configure the libpam-umask package.
 umask u=rwx,g=rx,o=
 
-# Add ~/bin to the $PATH
-export PATH="${HOME}/bin:${PATH}"
-
 # Load additional dotfiles:
 # * ~/.path can be used to extend $PATH.
 # * ~/.extra can be used for other settings you don't want to commit.
@@ -31,10 +28,6 @@ shopt -s cdspell
 # * Recursive globbing, e.g. echo **/*.txt
 shopt -s autocd 2> /dev/null
 shopt -s globstar 2> /dev/null
-
-# Prefer US English and use UTF-8
-export LC_ALL="en_US.UTF-8"
-export LANG="en_US"
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
 [ -e "${HOME}/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh

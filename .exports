@@ -6,6 +6,9 @@ export EDITOR="vim"
 # Don't clear the screen after quitting a man page.
 export MANPAGER="less -X"
 
+# Add ~/bin to the $PATH
+export PATH="${HOME}/bin:${PATH}"
+
 # Hilight section titles in man pages.
 export LESS_TERMCAP_MD="${RED}"
 
@@ -19,3 +22,12 @@ export HISTIGNORE="ls:pwd:exit:date:* --help"
 
 # Log Directory
 export LOGS_DIR="${HOME}/log"
+
+# Prefer US English and use UTF-8
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US"
+
+# Set up nvm directories
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
