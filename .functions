@@ -10,6 +10,15 @@ fi
 
 SSH_ENV="$HOME/.ssh/environment"
 
+function activate {
+    if [ -d "$HOME/.virtualenvs/$@" ]; then
+        echo "Activating virtual environment $@.";
+        source "$HOME/.virtualenvs/$@/bin/activate";
+    else
+        echo "Could not locate virtual environment $@.";
+    fi
+}
+
 function ssh_start_agent {
     echo "Initializing new SSH agent..."
     ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
