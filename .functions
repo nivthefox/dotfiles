@@ -19,6 +19,11 @@ function activate {
     fi
 }
 
+function clearssh {
+    local host=$@
+    sed -i.bak "/$host/d" ~/.ssh/known_hosts
+}
+
 function ssh_start_agent {
     echo "Initializing new SSH agent..."
     ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
