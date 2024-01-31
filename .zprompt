@@ -1,0 +1,38 @@
+#!/bin/bash
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color > /dev/null 2>&1; then
+    export TERM=gnome-256color
+elif infocmp xterm-256color > /dev/null 2>&1; then
+    export TERM=xterm-256color
+fi
+
+NEWLINE=$'\n'
+
+# Autoload zsh's `add-zsh-hook` and `vcs_info` functions
+# (-U autoload w/o substition, -z use zsh style)
+autoload -Uz add-zsh-hook vcs_info
+
+# Set prompt substitution so we can use the vcs_info_message variable
+setopt prompt_subst
+
+# Run the `vcs_info` hook to grab git info before displaying the prompt
+add-zsh-hook precmd vcs_info
+
+# Style the vcs_info message
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git*' formats ' %F{136}%b%u%c'
+# Format when the repo is in an action (merge, rebase, etc)
+zstyle ':vcs_info:git*' actionformats '%F{14}⏱ %*%f'
+zstyle ':vcs_info:git*' unstagedstr '%F{11}*'
+zstyle ':vcs_info:git*' stagedstr '%F{10}+'
+# This enables %u and %c (unstaged/staged changes) to work,
+# but can be slow on large repos
+zstyle ':vcs_info:*:*' check-for-changes true
+
+
+#export PS1="\[${HIBLACK}\][\[${HICYAN}\]%n@%m\[${HIBLACK}\]:\[${GREEN}\]i%l~\[${HIBLACK}\]::\[${RED}\]\j\[${HIBLACK}\]]\[${RESET}\]\n\[${HIBLACK}\][\[${MAGENTA}\]\d \t\[${YELLOW}\]\$(getGitBranch)\[${HIYELLOW}\]\$(getGitHealth)\[${HIBLACK}\]] \[${HIWHITE}\]\$ \[${RESET}\]"
+
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+
+PROMPT="%F{238}[%F{33}%n@%m%F{238}:%F{green}%~%F{238}:%F{red}%j%F{238}]%f${NEWLINE}%F{238}[%F{105}%D{%a %b %d %H:%M:%S}\$vcs_info_msg_0_%F{238}]%f %# "

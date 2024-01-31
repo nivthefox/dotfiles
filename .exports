@@ -9,10 +9,13 @@ export MANPAGER="less -X"
 # Add ~/bin to the $PATH
 export PATH="${HOME}/bin:${PATH}"
 
-# Hilight section titles in man pages.
-export LESS_TERMCAP_MD="${RED}"
+# Add ~/go/bin to the $PATH
+export PATH="${HOME}/go/bin:${PATH}"
 
-# Larger bash history (allow 32^3 entries; default is 500)
+# Hilight section titles in man pages.
+export LESS_TERMCAP_MD="${RED}" # This doesn't work. Find out why
+
+# Larger history (allow 32^3 entries; default is 500)
 export HISTSIZE=32768
 export HISTFILESIZE=${HISTSIZE}
 export HISTCONTROL=ignoredups
