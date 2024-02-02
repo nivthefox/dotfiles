@@ -7,6 +7,9 @@
   tg = "!f(){ git tag | sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n; };f"
   pum = pull --rebase upstream master
   pom = pull --rebase origin master
+  cleanup = ! "git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" {print $1}' | xargs -r git branch -D"
+
+
 
 [core]
     attribsfile = ~/.gitattributes
