@@ -1,4 +1,4 @@
-[ -n "$PS1" ] && source .profile
+[ -n "$PS1" ] && source ~/.profile
 
 # Append tot he zsh history file, rather than overwriting it.
 setopt APPEND_HISTORY
@@ -13,4 +13,4 @@ setopt AUTO_CD
 # A little bit of bashism.
 bindkey -e
 
-# source .zprompt
+source ~/.zprompt
